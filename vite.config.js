@@ -4,10 +4,9 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/handtracking/',
   plugins: [
-    react(),
-    basicSsl()
+    react()
   ],
   server: {
     https: true,

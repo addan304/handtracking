@@ -6,6 +6,30 @@ import HandTracker from './components/HandTracker';
 import ParticleSystem from './components/ParticleSystem';
 import { useHand } from './context/HandContext';
 import PhotoLayer from './components/PhotoLayer';
+import couple1 from './assets/couple1.jpeg';
+import couple2 from './assets/couple2.jpeg';
+import song from './assets/song.mp3';
+
+// Simple Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ color: 'white', padding: 20, background: 'red', position: 'fixed', top: 0, zIndex: 9999 }}>
+          <h3>3D Error Detected</h3>
+          <p>{this.state.error?.message}</p>
+          <button onClick={() => window.location.reload()}>Reload Page</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export default function App() {
   const [pattern, setPattern] = useState('scatter');
@@ -67,7 +91,7 @@ export default function App() {
               '--delay': `${(i % 12) * 0.08}s`
             }}
           >
-            <img src={i % 2 === 0 ? "/couple1.jpeg" : "/couple2.jpeg"} className="wall-item" alt="forever" />
+            <img src={i % 2 === 0 ? couple1 : couple2} className="wall-item" alt="forever" />
             <span className="mini-heart" style={{ top: '10%', left: '10%', animationDelay: '0.2s' }}>❤️</span>
             <span className="mini-heart" style={{ bottom: '15%', right: '12%', animationDelay: '0.5s' }}>💖</span>
             <span className="mini-heart" style={{ top: '20%', right: '15%', animationDelay: '0.8s', fontSize: '10px' }}>💕</span>
@@ -110,16 +134,18 @@ export default function App() {
         </button>
       </div>
 
-      <audio ref={audioRef} loop src="/song.mp3" />
+      <audio ref={audioRef} loop src={song} />
 
       {/* Main 3D Experience */}
       <div style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, left: 0, zIndex: 1, background: '#000' }}>
         <Canvas dpr={isMobile ? 1 : [1, 1.5]} gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}>
           <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={55} />
           <color attach="background" args={['#000000']} />
-          <Suspense fallback={<mesh><textGeometry args={['LOADING...', { size: 1, height: 0.1 }]} /></mesh>}>
-            <ParticleSystem pattern={pattern} color={color} customText={customText} count={particleCount} hasStarted={hasStarted} />
-            <PhotoLayer onHandCountChange={setHandsVisible} onOpennessChange={setIsHandOpen} />
+          <Suspense fallback={<mesh><boxGeometry args={[0.1, 0.1, 0.1]} /><meshBasicMaterial transparent opacity={0} /></mesh>}>
+            <ErrorBoundary>
+              <ParticleSystem pattern={pattern} color={color} customText={customText} count={particleCount} hasStarted={hasStarted} />
+              <PhotoLayer onHandCountChange={setHandsVisible} onOpennessChange={setIsHandOpen} />
+            </ErrorBoundary>
           </Suspense>
         </Canvas>
       </div>

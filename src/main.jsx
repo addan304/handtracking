@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+
 import App from './App.jsx'
 import { HandProvider } from './context/HandContext'
 
@@ -26,6 +27,9 @@ if (rootElement) {
       <App />
     </HandProvider>
   );
+  // Manual hide for the loading screen as a fail-safe
+  const status = document.getElementById('app-status');
+  if (status) status.style.display = 'none';
   console.log("Main: React root rendered.");
 } else {
   console.error("Main: Root element not found!");

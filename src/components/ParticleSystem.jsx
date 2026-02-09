@@ -2,6 +2,8 @@ import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useHand } from '../context/HandContext';
+import tex1Asset from '../assets/couple1.jpeg';
+import tex2Asset from '../assets/couple2.jpeg';
 
 const ParticleShaderMaterial = {
     vertexShader: `
@@ -120,7 +122,7 @@ export default function ParticleSystem({ pattern, color, count = 2000, hasStarte
     const meshRef = useRef();
     const photoGroupRef = useRef();
     const handState = useHand();
-    const [tex1, tex2] = useLoader(THREE.TextureLoader, ['/couple1.jpeg', '/couple2.jpeg']);
+    const [tex1, tex2] = useLoader(THREE.TextureLoader, [tex1Asset, tex2Asset]);
 
     const positions = useMemo(() => {
         const text = "HAPPY\nVALENTINE'S DAY\nBEBE";
