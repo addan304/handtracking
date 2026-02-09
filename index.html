@@ -27,7 +27,7 @@
       display: none;
     }
   </style>
-  <script type="module" crossorigin src="/handtracking/assets/index-Ds7hin_P.js"></script>
+  <script type="module" crossorigin src="/handtracking/assets/index-CMSs5os6.js"></script>
   <link rel="stylesheet" crossorigin href="/handtracking/assets/index-ChmMFexO.css">
 </head>
 
@@ -40,10 +40,19 @@
       connection.</div>
   </div>
   <script>
-    // Fallback for module loading errors
+    // ULTIMATE FAIL-SAFE: Hide loading screen after 15s no matter what
+    setTimeout(function () {
+      var status = document.getElementById('app-status');
+      if (status) status.style.display = 'none';
+      console.log("Fail-safe: Forced hide of loading screen.");
+    }, 15000);
+
+    // Error logging fallback
     window.addEventListener('error', function (e) {
       if (e.target.tagName === 'SCRIPT') {
-        document.getElementById('status-text').innerHTML = '<span style="color:#ff69b4">RESOURCE LOAD ERROR</span><br/><small>Check your internet/VPN</small>';
+        document.getElementById('status-text').innerHTML =
+          '<span style="color:#ff69b4">SCRIPT LOAD ERROR</span><br/>' +
+          '<small style="font-size:9px">Path: ' + e.target.src + '</small>';
       }
     }, true);
   </script>
