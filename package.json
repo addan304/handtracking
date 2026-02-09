@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://[giftfromadan].github.io/handtracking/",
+  "homepage": "https://addan304.github.io/handtracking/",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
