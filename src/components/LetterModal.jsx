@@ -36,23 +36,23 @@ export default function LetterModal({ onClose }) {
                     <h2 className="letter-greeting">HI BEBE ❤️</h2>
 
                     <p className="letter-text">
-                        Happy valentines day yaaa, ini valentine kita yang kedua btw semoga valentine berikutnya kita masih bisa rayain sama sama ya.
+                        happy valentines day yaaa, ini valentine kita yang kedua btw semoga valentine berikutnya kita masih bisa rayain sama sama ya.
                     </p>
 
                     <p className="letter-text">
-                        Im so happy and excited bikin ini buat kamu, ya walaupun aku tau kita lagi ga baik baik aja, tapi itu ga ngurangin semangat aku buat siapin gift ini for you bebe, i hope you like this.
+                        im so happy and excited bikin ini buat kamu, ya walaupun aku tau kita lagi ga baik baik aja, tapi itu ga ngurangin semangat aku buat siapin gift ini for you bebe, i hope you like this.
                     </p>
 
                     <p className="letter-text">
-                        Tbh aku kangen banget sama kamu udah hampir sebulan kita break, sedih banget rasanya selama kita break ya walaupun ini demi kebaikan dan keberlanjutan kita juga kedepannya supaya bisa bareng terus.
+                        jujur aku kangen banget sama kamu udah hampir sebulan kita break, sedih banget rasanya selama kita break ya walaupun ini demi kebaikan dan keberlanjutan kita juga kedepannya supaya bisa bareng terus.
                     </p>
 
                     <p className="letter-text">
-                        Dan selama break aku cukup banyak belajar untuk jadi lebih dewasa dan aku belajar buat bener bener percaya sepenuhnya ke kamu, gamau lagi ovt gajelas gamau lagi nethink gajelas, karena kalo aku bilang percaya sama kamu tapi masih ovt, masih nethink buat apa aku bilang percaya sama kamu kalo ujung ujungnya masih nethink dan karna hal itu kita jadi berantem terus, im so sorry for that.
+                        dan selama break aku cukup banyak belajar untuk jadi lebih dewasa dan aku belajar buat bener bener percaya sepenuhnya ke kamu, gamau lagi ovt gajelas gamau lagi nethink gajelas, karena kalo aku bilang percaya sama kamu tapi masih ovt, masih nethink buat apa aku bilang percaya sama kamu kalo ujung ujungnya masih nethink dan karna hal itu kita jadi berantem terus, im so sorry for that.
                     </p>
 
                     <p className="letter-text">
-                        So sekarang aku bener bener percaya sama kamu bebe, rasa sayang aku ke kamu ga pernah berkurang bebe, aku harap kamu suka gift dari pacar kamu yang ganteng teng teng teng ini hehehehe.
+                        so sekarang aku bener bener percaya sama kamu bebe, rasa sayang aku ke kamu ga pernah berkurang bebe, aku harap kamu suka gift dari pacar kamu yang ganteng teng teng teng ini hehehehe.
                     </p>
 
                     <p className="letter-text highlight">
