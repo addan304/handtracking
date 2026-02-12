@@ -1,4 +1,4 @@
-import { useState, Suspense, useRef, useEffect } from 'react';
+import React, { useState, Suspense, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Settings2, Volume2, VolumeX, Heart, Play, Activity } from 'lucide-react';
@@ -6,6 +6,7 @@ import HandTracker from './components/HandTracker';
 import ParticleSystem from './components/ParticleSystem';
 import { useHand } from './context/HandContext';
 import PhotoLayer from './components/PhotoLayer';
+import LetterModal from './components/LetterModal';
 import couple1 from './assets/couple1.jpeg';
 import couple2 from './assets/couple2.jpeg';
 import song from './assets/song.mp3';
@@ -40,6 +41,7 @@ export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [handsVisible, setHandsVisible] = useState(0);
   const [isHandOpen, setIsHandOpen] = useState(false);
+  const [showLetter, setShowLetter] = useState(true);
   const audioRef = useRef(null);
 
   const isMobile = window.innerWidth <= 768;
@@ -77,6 +79,8 @@ export default function App() {
   return (
     <main style={{ background: '#000', width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
 
+      {showLetter && <LetterModal onClose={() => setShowLetter(false)} />}
+
       <div className="watermark">from adan</div>
 
 
@@ -99,7 +103,7 @@ export default function App() {
         ))}
       </div>
 
-      {!hasStarted && (
+      {!hasStarted && !showLetter && (
         <div className="premium-start-screen">
           {[...Array(isMobile ? 4 : 8)].map((_, i) => (
             <Heart key={i} className="floating-bg-heart" size={120 + i * 40} color="#FF1493"
@@ -162,3 +166,4 @@ export default function App() {
     </main>
   );
 }
+

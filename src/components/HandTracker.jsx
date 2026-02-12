@@ -17,27 +17,40 @@ export default function HandTracker() {
 
         const setup = async () => {
             console.log("HandTracker: Starting setup...");
-            try {
-                const vision = await FilesetResolver.forVisionTasks(
-                    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm"
-                );
 
-                console.log("HandTracker: Vision tasks resolver loaded.");
-                landmarkerRef.current = await HandLandmarker.createFromOptions(vision, {
-                    baseOptions: {
-                        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
-                        delegate: isMobile ? "CPU" : "GPU"
-                    },
-                    runningMode: "VIDEO",
-                    numHands: 2
-                });
-                console.log("HandTracker: Landmarker created.");
+            // Timeout promise
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("AI Loading Timeout (10s)")), 10000)
+            );
+
+            try {
+                // Race between loading and timeout
+                await Promise.race([
+                    (async () => {
+                        const vision = await FilesetResolver.forVisionTasks(
+                            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm"
+                        );
+
+                        console.log("HandTracker: Vision tasks resolver loaded.");
+                        landmarkerRef.current = await HandLandmarker.createFromOptions(vision, {
+                            baseOptions: {
+                                modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
+                                delegate: isMobile ? "CPU" : "GPU"
+                            },
+                            runningMode: "VIDEO",
+                            numHands: 2
+                        });
+                        console.log("HandTracker: Landmarker created.");
+                        await startWebcam();
+                    })(),
+                    timeoutPromise
+                ]);
+
                 setLoaded(true);
-                await startWebcam();
             } catch (e) {
                 console.error("Tracker Init Error:", e);
                 setErrorMsg('AI Init Failed: ' + e.message);
-                setLoaded(true);
+                setLoaded(true); // Allow app to continue even if AI fails
             }
         };
 
@@ -173,7 +186,7 @@ export default function HandTracker() {
         <div className="webcam-preview">
             <video ref={videoRef} autoPlay playsInline muted className="webcam-video"></video>
             {!loaded && <div className="loading-overlay">Waking up AI...</div>}
-            {errorMsg && <div className="loading-overlay" style={{ background: 'rgba(255,0,0,0.8)' }}>{errorMsg}</div>}
+            {errorMsg && <div className="loading-overlay" style={{ background: 'rgba(255,0,0,0.8)', zIndex: 9999 }}>{errorMsg}</div>}
         </div>
     );
 }
