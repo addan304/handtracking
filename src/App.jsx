@@ -41,7 +41,7 @@ export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [handsVisible, setHandsVisible] = useState(0);
   const [isHandOpen, setIsHandOpen] = useState(false);
-  const [showLetter, setShowLetter] = useState(true);
+  const [showLetter, setShowLetter] = useState(false);
   const audioRef = useRef(null);
 
   const isMobile = window.innerWidth <= 768;
@@ -50,13 +50,14 @@ export default function App() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.muted = isMuted;
-      if (!isMuted && hasStarted) {
+      // Play music if app started OR letter is open (since they clicked "Open Gift")
+      if (!isMuted && (hasStarted || showLetter)) {
         audioRef.current.play().catch(() => { });
       } else {
         audioRef.current.pause();
       }
     }
-  }, [isMuted, hasStarted]);
+  }, [isMuted, hasStarted, showLetter]);
 
   useEffect(() => {
     if (hasStarted) {
@@ -69,17 +70,24 @@ export default function App() {
   }, [handsVisible, isHandOpen, hasStarted]);
 
   const startApp = () => {
-    setHasStarted(true);
+    // Stage 1: Show Letter
+    setShowLetter(true);
     setIsMuted(false);
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().catch(() => { });
     }
   };
 
+  const handleLetterClose = () => {
+    // Stage 2: Start Hand Tracking Experience
+    setShowLetter(false);
+    setHasStarted(true);
+  };
+
   return (
     <main style={{ background: '#000', width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
 
-      {showLetter && <LetterModal onClose={() => setShowLetter(false)} />}
+      {showLetter && <LetterModal onClose={handleLetterClose} />}
 
       <div className="watermark">from adan</div>
 
